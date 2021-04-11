@@ -2,10 +2,9 @@ import numpy as np
 from collections import defaultdict
 # k-means clustering
 
-# k centroids
-
 
 def generate_test_points(count):
+    # Generates data points to cluster
     x_coords = np.random.randint(low=0, high=100, size=count)
     y_coords = np.random.randint(low=0, high=100, size=count)
     X = np.array([[x, y] for x, y in zip(x_coords, y_coords)])
@@ -22,10 +21,11 @@ class KMeans:
         self.count_per_centroid = defaultdict(int)
 
     def initialize_centroids(self):
+        # initializes centroids with random data points
         self.centroids = self.data[np.random.choice(X.shape[0], self.k, False)]
 
     def update_centroids(self, d_to_elt):
-        # maximization
+        # updates centroids to be the average of assigned data points
         last_centroids = self.centroids.copy()
         for idx in range(len(self.centroids)):
             self.centroids[idx] = np.mean(d_to_elt[idx], axis=0)
@@ -36,6 +36,7 @@ class KMeans:
             return False
 
     def assign_to_centroids(self):
+        # assign data points to closest centroid
         self.it_count += 1
         d = defaultdict(list)
         for idx, curr_point in enumerate(X):
@@ -47,6 +48,7 @@ class KMeans:
         return d
 
     def fit(self):
+        # assign to and update centroids until convergence
         converged = False
         while not converged:
             d = self.assign_to_centroids()
