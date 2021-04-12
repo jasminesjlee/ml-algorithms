@@ -18,7 +18,7 @@ class Perceptron:
             for x, y in zip(X, Y):
                 y_pred = np.sign(np.dot(x, self.w))
                 if y_pred != y:
-                    error = (y - y_pred) ** 2
+                    error += (y - y_pred) ** 2
                     self.w += self.lr * y * x.reshape(self.w.shape)
             print(f"Error: {error/X.shape[0]}")
 
