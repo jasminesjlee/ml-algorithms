@@ -3,7 +3,7 @@
 ## Basic supervised algorithms
 
 - [ ] KNN
-- [] Decision Tree
+- [ ] Decision Tree
 - [x] Naive Bayes
 - [x] Logistic Regression
 - [x] Linear Regression
