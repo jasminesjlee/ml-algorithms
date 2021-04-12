@@ -37,8 +37,9 @@ class LinearRegression():
         for idx in range(num_samples):
             x = X[:, idx]
             y_pred = np.dot(x, self.w)
-            total_error += -(1/num_samples) * np.sum((y[idx] - y_pred)**2)
+            total_error += np.sum((y[idx] - y_pred)**2)
             y_pred_list.append(y_pred)
+        total_error /= num_samples
         return total_error, y_pred_list
 
 

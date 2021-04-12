@@ -17,6 +17,8 @@ class KMeans:
         self.labels = np.zeros(len(X))
         self.data = X
         self.initialize_centroids()
+
+        # just for output analysis
         self.it_count = 0
         self.count_per_centroid = defaultdict(int)
 

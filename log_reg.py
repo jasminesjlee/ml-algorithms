@@ -7,6 +7,9 @@ class LogisticRegression():
         self.lr = lr
         self.num_iters = num_iters
 
+    def loss(self, y, y_pred):
+        return np.sum(-y * np.log(y_pred) + (1-y)*np.log(1-y_pred))
+
     def sgd_fit(self, X, y):
         (num_feats, num_samples) = X.shape  # (p, n)
         self.w = np.zeros(num_feats + 1)  # (p+1, 1)
@@ -37,11 +40,14 @@ class LogisticRegression():
         total_error = 0.0
         X = np.vstack((X, np.ones((1, num_samples))))  # (p+1, n)
         y_pred_list = []
+        loss = np.dot(X, self.w)
         for idx in range(num_samples):
             x = X[:, idx]
             y_pred = self.sigmoid(np.dot(x, self.w))
-            total_error += -(1/num_samples) * np.sum((y[idx] - y_pred)**2)
+            total_error += self.loss(y[idx], y_pred)
             y_pred_list.append(1 if y_pred >= 0.5 else 0)
+
+        total_error /= num_samples
         return total_error, y_pred_list
 
 
