@@ -1,5 +1,6 @@
 import numpy as np
 from collections import defaultdict
+
 # k-means clustering
 
 
@@ -43,8 +44,9 @@ class KMeans:
         d = defaultdict(list)
         for idx, curr_point in enumerate(X):
             # expectation
-            dist_to_centroid = [np.linalg.norm(
-                curr_point - centroid) for centroid in self.centroids]
+            dist_to_centroid = [
+                np.linalg.norm(curr_point - centroid) for centroid in self.centroids
+            ]
             closest = np.argmin(dist_to_centroid)
             d[closest].append(X[idx])
         return d
@@ -58,7 +60,7 @@ class KMeans:
         return self.centroids
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X = generate_test_points(100)
     kmeans = KMeans(5, X)
     print(kmeans.fit())

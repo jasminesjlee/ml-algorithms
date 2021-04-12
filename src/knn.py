@@ -1,15 +1,11 @@
 import numpy as np
 
 
-class Perceptron:
-    def __init__(self, lr, epochs):
-        self.lr = lr
-        self.epochs = epochs
+class KNN:
+    def __init__(self, k):
+        self.k = k
 
     def fit(self, X, Y):
-        # randomize weights
-        # X: (n, p)
-        # Y: (n, 1)
         X = np.hstack((X, np.ones((X.shape[0], 1))))
         self.w = np.random.random(size=(X.shape[1], 1))
 
@@ -18,9 +14,12 @@ class Perceptron:
             for x, y in zip(X, Y):
                 y_pred = np.sign(np.dot(x, self.w))
                 if y_pred != y:
-                    error += 1
+                    error += (y - y_pred) ** 2
                     self.w += self.lr * y * x.reshape(self.w.shape)
-            print(f"Error: {error}")
+            print(f"Error: {error/X.shape[0]}")
+
+    def predict(self, X, Y):
+        pass
 
 
 dataset = np.array(
