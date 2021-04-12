@@ -7,6 +7,8 @@
 - [x] Naive Bayes
 - [x] Logistic Regression
 - [x] Linear Regression
+- [x] Perceptron
+- [x] SVM
 
 ## Basic nonsupervised algorithms
 
