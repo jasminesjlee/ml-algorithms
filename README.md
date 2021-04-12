@@ -3,33 +3,24 @@
 ## Basic supervised algorithms
 
 - [ ] KNN
-- [x] Decision Tree
-- Naive Bayes
-- Logistic Regression
-- Linear Regression
+- [] Decision Tree
+- [x] Naive Bayes
+- [x] Logistic Regression
+- [x] Linear Regression
 
 ## Basic nonsupervised algorithms
 
-- K-Means
+- [x] K-Means
 
 ## Ensemble methods
 
-- Random forest
-- Adaboost
+- [ ] Random forest
+- [ ] Adaboost
 
-k-means clustering X
-k-nearest neighbors
-Decision trees
-Boosted trees
-Random Forest
-naive bayes X
+## More complex algorithms
 
-Perceptron, MLP
-Linear regression X
-Logistic regression X
-SVM X
-Multiclass algorithms
+- [ ] MLP
 
-NLP algorithms (if that's your area of work)
-bigrams
-tf-idf
+## NLP related code
+
+- [ ] tf-idf
