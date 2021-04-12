@@ -6,39 +6,39 @@ class KNN:
         self.k = k
 
     def fit(self, X, Y):
-        X = np.hstack((X, np.ones((X.shape[0], 1))))
-        self.w = np.random.random(size=(X.shape[1], 1))
+        self.X = X
+        self.y = y
 
-        for _ in range(self.epochs):
-            error = 0.0
-            for x, y in zip(X, Y):
-                y_pred = np.sign(np.dot(x, self.w))
-                if y_pred != y:
-                    error += (y - y_pred) ** 2
-                    self.w += self.lr * y * x.reshape(self.w.shape)
-            print(f"Error: {error/X.shape[0]}")
+    def euclid_dist(self, v1, v2):
+        return np.sqrt(np.sum((v1 - v2) ** 2))
 
-    def predict(self, X, Y):
-        pass
+    def regression_predict(self, X, Y):
+        assert X.shape[1] == self.X.shape[1]
+        y_pred = []
+        for v1 in X:
+            distances = np.zeros(
+                self.X.shape[0],
+            )
+            for idx, v2 in enumerate(self.X):
+                distances[idx] = euclid_dist(v1, v2)
+            closest_point_idx = np.argsort(
+                distances
+            )  # idx of closest point to furthest point
+            y_pred.append(np.mean(Y[closest_point_idx[: self.k]]))
+        return y_pred
 
-
-dataset = np.array(
-    [
-        [2.7810836, 2.550537003, -1],
-        [1.465489372, 2.362125076, -1],
-        [3.396561688, 4.400293529, -1],
-        [1.38807019, 1.850220317, -1],
-        [3.06407232, 3.005305973, -1],
-        [7.627531214, 2.759262235, 1],
-        [5.332441248, 2.088626775, 1],
-        [6.922596716, 1.77106367, 1],
-        [8.675418651, -0.242068655, 1],
-        [7.673756466, 3.508563011, 1],
-    ]
-)
-X = dataset[:, :-1]
-Y = dataset[:, -1]
-l_rate = 0.1
-n_epoch = 5
-p = Perceptron(l_rate, n_epoch)
-p.fit(X, Y)
+    def classification_predict(self, X, Y):
+        assert X.shape[1] == self.X.shape[1]
+        y_pred = []
+        for v1 in X:
+            distances = np.zeros(
+                self.X.shape[0],
+            )
+            for idx, v2 in enumerate(self.X):
+                distances[idx] = euclid_dist(v1, v2)
+            closest_point_idx = np.argsort(
+                distances
+            )  # idx of closest point to furthest point
+            bin_count = np.bincount(Y[closest_point_idx[:k]])
+            y_pred.append(np.argmax(bin_count))
+        return y_pred
