@@ -47,25 +47,24 @@ class Formulas:
         return np.sum(np.square(w))
 
     def l1_penalty(self, w):
-        return np.sum(np.sqrt(np.square(w)))
+        return np.sum(np.abs(w))
 
-    def elasticnet_penalty(self, w, alpha):
+    def elasticnet_penalty(self, w, alpha1, alpha2):
         # tradeoff between l1 and l2
-        return alpha * self.l2_penalty(w) + (1 - alpha) * self.l1_penalty(w1)
+        return alpha1 * self.l2_penalty(w) + alpha2 * self.l1_penalty(w1)
 
     # Basic losses
     def l2_loss(self, Y_pred, Y):
         return np.sum(np.square(Y_pred - Y))
 
     def l1_loss(self, Y_pred, Y):
-        return np.sum(np.sqrt(np.square(Y_pred - Y)))
+        return np.sum(np.abs(Y_pred - Y))
 
     def pseudo_huber_loss(self, Y_pred, Y, alpha):
         error = self.l1_loss(Y_pred, Y)
         if error <= alpha:
             return self.l2_loss(Y_pred, Y)
-        else:
-            return self.l1_loss(Y_pred, Y)
+        return error
 
     # REGRESSION LOSS FUNCTIONS
     # linear regression
@@ -73,7 +72,7 @@ class Formulas:
         return np.sum(np.square(Y_pred - Y)) / Y_pred.shape[0]
 
     def mae(self, Y_pred, Y):
-        return np.sum(np.sqrt(np.square(Y_pred - Y))) / Y_pred.shape[0]
+        return np.sum(np.abs(Y_pred - Y)) / Y_pred.shape[0]
 
     # CLASSIFICATION LOSS FUNCTIONS
     # logistic regression
@@ -81,8 +80,8 @@ class Formulas:
         # - 1/n sum (ylogpi + (1-y)log(1-pi))
         log_pi = np.log(Y_pred)
         log_1_minus_pi = np.log(1 - Y_pred)
-        positive_class = np.prod(Y, log_pi)
-        negative_class = np.prod(1 - Y, log_1_minus_pi)
+        positive_class = np.multiply(Y, log_pi)
+        negative_class = np.multiply(1 - Y, log_1_minus_pi)
         return -1 * (np.sum(positive_class + negative_class) / Y_pred.shape[0])
 
     def kl_divergence(self, p, q):
